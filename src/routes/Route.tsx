@@ -8,54 +8,43 @@ import Main from "../pages/Main";
 import Result from "../pages/Result";
 
 const createRouter = createBrowserRouter([
-
- 
   {
-    path: '/',
+    path: "/",
     element: <PrivateRoute />,
     children: [
       {
         path: "/",
-        element: <Main/>,
+        element: <Main />,
       },
       {
         path: "/quiz",
-        element: <Quiz/>,
+        element: <Quiz />,
       },
       {
         path: "/result",
-        element: <Result/>,
+        element: <Result />,
       },
-      
-    
     ],
   },
-  
+
   {
-    path:'/',
+    path: "/",
     element: <GuestRoute />,
     children: [
       {
         path: "login",
-        element: <Login/>,
+        element: <Login />,
       },
-   
     ],
   },
-//   {
-//     path: "*",
-//     element: <NotFound />,
-//   },
+  //   {
+  //     path: "*",
+  //     element: <NotFound />,
+  //   },
 ]);
 
 const Route = () => {
-    
-  
-  return (
-   
-        <RouterProvider router={createRouter} />
-       
-  );
+  return <RouterProvider router={createRouter} />;
 };
 
 export default Route;
