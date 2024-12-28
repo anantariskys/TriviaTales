@@ -1,11 +1,9 @@
 import { BrowserRouter as Router, RouterProvider } from "react-router-dom";
-import { AuthProvider } from "../hooks/useAuth";
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./visibility/PrivateRoute";
 import GuestRoute from "./visibility/GuestRoute";
 import Login from "../pages/Login";
 import Quiz from "../pages/Quiz";
-import { useEffect } from "react";
 import Main from "../pages/Main";
 import Result from "../pages/Result";
 
@@ -55,10 +53,8 @@ const Route = () => {
   
   return (
    
-      <AuthProvider>
         <RouterProvider router={createRouter} />
-      </AuthProvider>
-   
+       
   );
 };
 
