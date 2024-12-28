@@ -20,14 +20,14 @@ const Button: React.FC<buttonProps> = ({
   let className = "";
   switch (variant) {
     case "primary":
-      className = "bg-green-500 text-white";
+      className = "bg-primary text-white";
       break;
     case "secondary":
       className = "bg-purple-500 text-white";
       break;
     case "primary-outline":
       className =
-        "bg-transparent border  border-primary hover:bg-green-500 hover:text-white transition-colors text-primary";
+        "bg-transparent border  border-primary hover:bg-primary hover:text-white transition-colors text-primary";
       break;
     case "dark":
       className =
@@ -44,7 +44,7 @@ const Button: React.FC<buttonProps> = ({
     <button
       type={type}
       onClick={onClick}
-      className={`${className} ${width} px-8 py-2 active:scale-95 h-fit duration-300  rounded `}
+      className={`${className} ${width} px-8 py-2 gap-4 flex items-center justify-center active:scale-95 h-fit duration-300  rounded `}
     >
       {children}
     </button>
