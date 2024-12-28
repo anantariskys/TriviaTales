@@ -1,29 +1,49 @@
 import { create } from "zustand";
-
+import { persist } from "zustand/middleware";
 
 interface QuizTypeState {
-    categories :string[]
-    selectedCategoryId: number|null
-    totalQuestion : number
-    setCategories: (categories: string[]) => void
-    setSelectedCategory: (categoryId: number) => void
-    setTotalQuestion: (totalQuestion: number) => void
+  categories: { id: number; name: string }[];
+  selectedCategoryId: number | null;
+  selectedCategoryName: string | null;
+  totalQuestion: number;
+  setCategories: (categories: { id: number; name: string }[]) => void;
+  setSelectedCategory: (categoryId: number, categoryName: string) => void;
+  setTotalQuestion: (totalQuestion: number) => void;
+  resetType:()=>void
 }
-export const useQuizTypeStore = create<QuizTypeState>((set) => ({
-    categories:[],
-    selectedCategoryId:null,
-    totalQuestion:0,
-    setCategories(categories) {
-        set({ categories })
-    },
-    setSelectedCategory(categoryId:number) {
-        set({selectedCategoryId:categoryId})
-    },
-    setTotalQuestion(totalQuestion) {
-        set({
-            totalQuestion: totalQuestion > 0 && totalQuestion < 51 ? totalQuestion : 10
-        });
-    }
-    
 
-}))
+export const useQuizTypeStore = create(
+  persist<QuizTypeState>(
+    (set) => ({
+      categories: [],
+      selectedCategoryId: null,
+      selectedCategoryName: null,
+      totalQuestion: 10, // Default jumlah soal
+      setCategories(categories) {
+        set({ categories });
+      },
+      resetType() {
+        set({
+          categories: [],
+          selectedCategoryId: null,
+          selectedCategoryName: null,
+          totalQuestion: 10,
+        })
+      },
+      setSelectedCategory(categoryId, categoryName) {
+        set({
+          selectedCategoryId: categoryId,
+          selectedCategoryName: categoryName,
+        });
+      },
+      setTotalQuestion(totalQuestion) {
+        set({
+          totalQuestion,
+        });
+      },
+    }),
+    {
+      name: "quiz-type-storage",
+    }
+  )
+);
