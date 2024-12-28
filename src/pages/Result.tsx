@@ -1,4 +1,3 @@
-import React from "react";
 import { useQuizStore } from "../store/useQuizStore";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
