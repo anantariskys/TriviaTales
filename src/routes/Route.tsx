@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./visibility/PrivateRoute";
 import GuestRoute from "./visibility/GuestRoute";
