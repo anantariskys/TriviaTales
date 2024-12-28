@@ -1,5 +1,4 @@
 import axios from "axios";
-import coreApi from "../coreApi";
 
 const getQuestion = async (categoryId:number,totalQuestion:number) => {
   try {
