@@ -6,6 +6,12 @@ export default {
   ],
   theme: {
     extend: {
+      colors:{
+        'primary': '#6A95FF',
+        'secondary': '#00FF00',
+        'dark': '#000000',
+        'dark-2': '#333333',        
+      },
       container: {
         center:true,
         padding: {
