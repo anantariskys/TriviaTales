@@ -11,7 +11,7 @@ export interface Question {
 
 interface QuizState {
   questions: Question[];
-  answers: Record<number, string>; // Store answers with question index as key
+  answers: Record<number, string>;
   currentQuestionIndex: number;
   timer: number;
   setQuestions: (questions: Question[]) => void;
@@ -21,13 +21,17 @@ interface QuizState {
   setCurrentQuestionIndex: (index: number) => void;
   decrementTimer: () => void;
   reset: () => void;
+  setTimer: (timer: number) => void;
   results: {
     correct: number;
     incorrect: number;
     answered: number;
+    totalQuestion: number;
+    answeredQuestions: Array<{ question: string, userAnswer: string, correctAnswer: string }>;
   };
-  setResults: (results: { correct: number; incorrect: number; answered: number }) => void;
+  setResults: (results: { correct: number; incorrect: number; answered: number, totalQuestion: number, answeredQuestions: Array<{ question: string, userAnswer: string, correctAnswer: string }> }) => void;
 }
+
 
 export const useQuizStore = create(
   persist<QuizState>(
@@ -36,9 +40,12 @@ export const useQuizStore = create(
       currentQuestionIndex: 0,
       timer: 60,
       answers: {},
-      results: { correct: 0, incorrect: 0, answered: 0 },
+      results: { correct: 0, incorrect: 0, answered: 0,totalQuestion: 0 ,answeredQuestions: [] },
       setResults(results) {
         set({ results });
+      },
+      setTimer(timer) {
+        set({ timer });
       },
 
       setAnswer(index, answer) {
