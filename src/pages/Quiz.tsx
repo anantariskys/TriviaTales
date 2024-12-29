@@ -1,4 +1,4 @@
-import  { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import { getQuestion } from "../api/services/quiz";
@@ -20,9 +20,9 @@ const Quiz = () => {
     next,
     prev,
     setCurrentQuestionIndex,
-    setResults
+    setResults,
   } = useQuizStore();
-  const { selectedCategoryId, totalQuestion, selectedCategoryName } =
+  const { selectedCategoryId, totalQuestion, selectedCategoryName, resetType } =
     useQuizTypeStore();
 
   const navigate = useNavigate();
@@ -59,35 +59,32 @@ const Quiz = () => {
 
       const result = calculateResult(questions, answers);
       const { correct, incorrect, answered } = result;
-  
+
       setResults({
         correct,
         incorrect,
-        answered
+        answered,
       });
-  
+
       navigate("/result");
       reset();
+      resetType();
     }
   }, [timer, navigate, questions, answers, setResults, reset]);
 
   const handleFinishQuiz = () => {
     const result = calculateResult(questions, answers);
-    console.log(questions, answers);
-
     const { correct, incorrect, answered } = result;
-
     setResults({
       correct,
       incorrect,
-      answered
+      answered,
     });
 
-  
     navigate("/result");
     reset();
+    resetType();
   };
-  
 
   return (
     <div className="container flex flex-col md:flex-row h-screen py-8 gap-6">
@@ -116,7 +113,12 @@ const Quiz = () => {
               </div>
             ))}
         </div>
-        <Button onClick={handleFinishQuiz} variant="dark" width="w-full" className="mt-4">
+        <Button
+          onClick={handleFinishQuiz}
+          variant="dark"
+          width="w-full"
+          className="mt-4"
+        >
           Selesai
         </Button>
       </aside>
