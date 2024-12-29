@@ -12,7 +12,6 @@ const Main = () => {
     categories,
     selectedCategoryId,
     setSelectedCategory,
-    selectedCategoryName,
     setTotalQuestion,
     totalQuestion,
     resetType,
