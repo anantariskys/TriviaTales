@@ -49,7 +49,7 @@ const Button: React.FC<buttonProps> = ({
     <button
       type={type}
       onClick={onClick}
-      className={`${className} ${width} px-8 outline-none md:text-base text-sm py-2 gap-4 flex items-center justify-center active:scale-95 h-fit duration-300  rounded `}
+      className={`${className} ${width} px-4 md:px-8 outline-none md:text-base text-sm py-2 gap-4 flex items-center justify-center active:scale-95 h-fit duration-300  rounded `}
     >
       {children}
     </button>
