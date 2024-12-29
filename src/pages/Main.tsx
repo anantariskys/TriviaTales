@@ -16,7 +16,7 @@ const Main = () => {
     totalQuestion,
     resetType,
   } = useQuizTypeStore();
-  const { questions, reset } = useQuizStore();
+  const { questions, reset ,setTimer} = useQuizStore();
   const { userData } = useAuthStore();
   const navigate = useNavigate();
 
@@ -38,19 +38,21 @@ const Main = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    resetType();
     navigate("/login");
+    resetType();
+    reset();
   };
 
   const handleStartQuiz = () => {
-    if (totalQuestion > 0 && totalQuestion <= 50) {
+    if (totalQuestion >= 10 && totalQuestion <= 30) {
       if (selectedCategoryId !== null) {
         reset();
+        setTimer(totalQuestion * 30);
         return navigate("/quiz");
       }
       return window.alert("Please select a category first.");
     }
-    return window.alert("Number of questions must be between 1-50.");
+    return window.alert("Number of questions must be between 10-30.");
   };
 
   const handleResumeQuiz = () => {
@@ -70,7 +72,7 @@ const Main = () => {
         <aside className="max-w-sm w-full p-4 rounded-lg shadow-lg bg-primary ">
           <h1 className="text-tertiary text-2xl mb-4">
             Welcome to{" "}
-            <span className="text-secondary font-semibold">TriviaTales</span>,{" "}
+            <span className="text-secondary font-semibold">Trivia Tales</span>,{" "}
             {userData?.name}!
           </h1>{" "}
           <h2 className="text-secondary text-xl font-semibold mb-2">
