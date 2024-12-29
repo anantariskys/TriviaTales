@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes} from "react";
+import React, { ButtonHTMLAttributes } from "react";
 
 interface buttonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -6,6 +6,7 @@ interface buttonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "primary"
     | "primary-outline"
     | "secondary"
+    | "secondary-outline"
     | "dark"
     | "dark-outline";
   width?: "w-full" | "w-fit";
@@ -23,7 +24,11 @@ const Button: React.FC<buttonProps> = ({
       className = "bg-primary text-white";
       break;
     case "secondary":
-      className = "bg-purple-500 text-white";
+      className = "bg-secondary text-white";
+      break;
+    case "secondary-outline":
+      className =
+        "bg-transparent border  border-secondary hover:bg-secondary hover:text-white transition-colors text-primary";
       break;
     case "primary-outline":
       className =
@@ -31,7 +36,7 @@ const Button: React.FC<buttonProps> = ({
       break;
     case "dark":
       className =
-        "bg-neutral-800 border   hover:border-neutral-900 text-white transition-colors ";
+        "bg-neutral-800    hover:border-neutral-900 text-white transition-all ";
       break;
     case "dark-outline":
       className =
@@ -44,7 +49,7 @@ const Button: React.FC<buttonProps> = ({
     <button
       type={type}
       onClick={onClick}
-      className={`${className} ${width} px-8 py-2 gap-4 flex items-center justify-center active:scale-95 h-fit duration-300  rounded `}
+      className={`${className} ${width} px-8 outline-none md:text-base text-sm py-2 gap-4 flex items-center justify-center active:scale-95 h-fit duration-300  rounded `}
     >
       {children}
     </button>
