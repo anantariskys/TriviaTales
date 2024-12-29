@@ -1,10 +1,7 @@
-// pages/Result.js
 import { useQuizStore } from "../store/useQuizStore";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
-import { Icon } from "@iconify/react";
 import { CircularProgressbar } from "react-circular-progressbar";
-import Badge from "../components/Badge"; // Import Badge component
 import QuizResults from "../components/results/QuizResult";
 import QuizSummary from "../components/results/QuizSummary";
 
