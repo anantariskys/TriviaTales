@@ -40,12 +40,12 @@ const QuizCurrentQuestion = () => {
     <div className={`flex ${currentQuestionIndex === questions.length - 1 ? "justify-start" : currentQuestionIndex === 0 ? "justify-end" : "justify-between"} items-center`}>
       {currentQuestionIndex > 0 && (
         <Button onClick={() => prev()} variant="primary" width="w-fit">
-          Kembali
+          Prev
         </Button>
       )}
       {currentQuestionIndex < questions.length - 1 && (
         <Button onClick={() => next()} variant="primary" width="w-fit">
-          Selanjutnya
+          Next
         </Button>
       )}
     </div>
