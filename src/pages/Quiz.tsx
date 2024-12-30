@@ -8,6 +8,8 @@ import getAnsweredQuestions from "../utils/getAnsweredQuestion";
 import QuizSideMenu from "../components/quiz/QuizSideMenu";
 import QuizCurrentQuestion from "../components/quiz/QuizCurrentQuestion";
 import LoadingScreen from "../components/quiz/LoadingScreen";
+import { useModalStore } from "../store/useModalStore";
+import Modal from "../components/Modal";
 
 const Quiz = () => {
   const {
@@ -19,9 +21,12 @@ const Quiz = () => {
     answers,
     setResults,
   } = useQuizStore();
+  const {} = useModalStore();
 
   const { selectedCategoryId, totalQuestion, selectedCategoryName, resetType } =
     useQuizTypeStore();
+
+  const { openModal } = useModalStore();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,24 +39,23 @@ const Quiz = () => {
           totalQuestion
         );
         if (response.length === 0) {
-          window.alert(
-            `Tidak ditemukan ${totalQuestion} soal pada ketegori ${selectedCategoryName}, silahkan pilih kategori yang lain / kurangi total soal.`
+          setIsLoading(true)
+          openModal(
+            `Could not find ${totalQuestion} questions in the ${selectedCategoryName} category, please select a different category or reduce the total number of questions.`,
+            () => navigate("/")
           );
-          navigate("/");
+        }else{
+          setIsLoading(false);
         }
         setQuestions(response);
-      } catch (error: any) {
+      } catch (error: any) {        
         if (error.response?.data?.response_code === 5) {
-          window.alert("Terlalu banyak request, coba 5 detik lagi");
-          navigate("/");
+          openModal("Too many requests, please try again in 5 seconds.", () => navigate("/"));
         } else {
-          console.error("Terjadi error saat mengambil data: ", error);
-          window.alert("Gagal memuat pertanyaan. Silakan coba lagi.");
-          navigate("/");
+          console.error("Error: ", error);
+          openModal("Error, please try again", () => navigate("/"));
         }
-      } finally {
-        setIsLoading(false);
-      }
+      } 
     };
     if (
       selectedCategoryId === null ||
@@ -82,14 +86,15 @@ const Quiz = () => {
         totalQuestion: questions.length,
         answeredQuestions,
       });
-      navigate("/result");
       reset();
       resetType();
+      setIsLoading(true);
+      openModal("Waktu habis", () => navigate("/result"));
     }
   }, [timer, navigate, questions, answers, setResults, reset]);
 
   if (isLoading) {
-    return <LoadingScreen />;
+    return <LoadingScreen /> ;
   }
 
   return (
@@ -104,6 +109,7 @@ const Quiz = () => {
         <QuizSideMenu />
         <QuizCurrentQuestion />
       </div>
+      <Modal />
     </div>
   );
 };
