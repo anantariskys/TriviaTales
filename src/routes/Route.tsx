@@ -6,6 +6,8 @@ import Login from "../pages/Login";
 import Quiz from "../pages/Quiz";
 import Main from "../pages/Main";
 import Result from "../pages/Result";
+import NotFound from "../pages/NotFound";
+
 
 const createRouter = createBrowserRouter([
   {
@@ -37,10 +39,10 @@ const createRouter = createBrowserRouter([
       },
     ],
   },
-  //   {
-  //     path: "*",
-  //     element: <NotFound />,
-  //   },
+    {
+      path: "*",
+      element: <NotFound />,
+    },
 ]);
 
 const Route = () => {
