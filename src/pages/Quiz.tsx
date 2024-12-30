@@ -109,7 +109,7 @@ const Quiz = () => {
         <QuizSideMenu />
         <QuizCurrentQuestion />
       </div>
-      <Modal />
+      <Modal closeButton />
     </div>
   );
 };
