@@ -5,6 +5,8 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import { useQuizStore } from "../store/useQuizStore";
+import { useModalStore } from "../store/useModalStore";
+import Modal from "../components/Modal";
 
 const Main = () => {
   const {
@@ -18,6 +20,7 @@ const Main = () => {
   } = useQuizTypeStore();
   const { questions, reset ,setTimer} = useQuizStore();
   const { userData } = useAuthStore();
+  const {openModal} = useModalStore()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +30,7 @@ const Main = () => {
         setCategories(response);
       } catch (error: any) {
         if (error.response?.data?.response_code === 5) {
-          window.alert("Too many requests, please try again in 5 seconds.");
+          openModal("Too many requests, please try again in 5 seconds.");
         } else {
           console.error(error);
         }
@@ -44,15 +47,15 @@ const Main = () => {
   };
 
   const handleStartQuiz = () => {
-    if (totalQuestion >= 10 && totalQuestion <= 30) {
+    if (totalQuestion >= 10 && totalQuestion < 51) {
       if (selectedCategoryId !== null) {
         reset();
-        setTimer(totalQuestion * 30);
+        setTimer(15*totalQuestion);
         return navigate("/quiz");
       }
-      return window.alert("Please select a category first.");
+      return openModal("Please select a category first.");
     }
-    return window.alert("Number of questions must be between 10-30.");
+    return openModal("Number of questions must be between 10-50.");
   };
 
   const handleResumeQuiz = () => {
@@ -68,6 +71,7 @@ const Main = () => {
           "url(https://www.transparenttextures.com/patterns/inspiration-geometry.png)",
       }}
     >
+      <Modal/>
       <div className="container min-h-screen py-4 flex lg:flex-row flex-col gap-4 items-center justify-center">
         <aside className="max-w-sm w-full p-4 rounded-lg shadow-lg bg-primary ">
           <h1 className="text-tertiary text-2xl mb-4">
@@ -85,7 +89,7 @@ const Main = () => {
             </li>
             <li>
               The time allocated depends on the total number of questions you
-              select (<strong>30 seconds per question</strong>).
+              select (<strong>15 seconds per question</strong>).
             </li>
             <li>Answer all the questions before the time runs out!</li>
             <li className="font-semibold">Good luck and have fun!</li>
@@ -140,14 +144,15 @@ const Main = () => {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setTotalQuestion(Number(e.target.value))
                 }
+                type="number"
                 max={50}
-                min={0}
+                min={10}
                 className="w-full border accent-secondary border-gray-300 rounded-lg p-2"
                 required
               />
             </div>
             <div className="flex md:flex-row flex-col gap-2">
-              <Button onClick={handleStartQuiz} variant="primary">
+              <Button onClick={handleStartQuiz} variant="secondary">
                 {questions.length > 0 ? "Start New Quiz" : "Start Quiz"}
               </Button>
 
@@ -157,7 +162,7 @@ const Main = () => {
                 </Button>
               )}
 
-              <Button type="submit" variant="secondary" onClick={handleLogout}>
+              <Button type="submit" variant="primary" onClick={handleLogout}>
                 Logout
               </Button>
             </div>
