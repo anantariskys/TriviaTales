@@ -22,7 +22,7 @@ const PrivateRoute = () => {
       } catch (error:any) {
         console.error('Error fetching user profile:', error);
         if (error.response.data.error) {
-          window.alert(error.response.data.error);
+          window.alert('Session Expired, Please Login Again');
           localStorage.removeItem('token');
           navigate('/login');
         }
@@ -33,7 +33,6 @@ const PrivateRoute = () => {
     if (token) {
       setIsAuthenticated(true);
       profile();
-   
     }
 
   }, []);
