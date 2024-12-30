@@ -4,13 +4,33 @@ import { useNavigate } from "react-router-dom";
 import { CircularProgressbar } from "react-circular-progressbar";
 import QuizResults from "../components/results/QuizResult";
 import QuizSummary from "../components/results/QuizSummary";
+import { useEffect, useState } from "react";
 
 const Result = () => {
-  const { results } = useQuizStore();
+  const [score, setScore] = useState(0);
+  const { results,resetResults } = useQuizStore();
+
   const navigate = useNavigate();
-  const score = results.correct
-    ? (results.correct / results.totalQuestion) * 100
-    : 0;
+  
+  useEffect(() => {
+    if (results.answeredQuestions.length === 0) {
+      navigate("/");
+    }
+    setScore(results.correct
+      ? (results.correct / results.totalQuestion) * 100
+      : 0)
+
+
+      return () => {
+        resetResults()
+      }
+  }, []);
+  
+
+  const handleBackToHome = () => {
+    navigate("/");
+   
+  }
 
   return (
     <div
@@ -54,7 +74,7 @@ const Result = () => {
        <QuizResults answeredQuestions={results.answeredQuestions}/>
 
         <Button
-          onClick={() => navigate("/")}
+          onClick={handleBackToHome}
           variant="secondary"
           width="w-fit"
           className="mt-6 mx-auto"
