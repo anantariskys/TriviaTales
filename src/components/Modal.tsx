@@ -3,8 +3,8 @@ import { useModalStore } from "../store/useModalStore";
 import { Icon } from "@iconify/react";
 import Button from "./Button";
 
-const Modal: React.FC = () => {
-  const { isModalOpen, modalMessage, onConfirm, onCancel, closeModal } =
+const Modal: React.FC<{closeButton?:boolean}> = ({closeButton}) => {
+  const { isModalOpen, modalMessage, onConfirm, onCancel, closeModal, } =
     useModalStore();
 
   return (
@@ -34,7 +34,7 @@ const Modal: React.FC = () => {
          variant="primary"
               onClick={() => {onConfirm(),closeModal()}}
             >
-              OK
+              Yes
             </Button>
           )}
 
@@ -55,6 +55,8 @@ const Modal: React.FC = () => {
               Close
             </Button>
           )}
+
+          {onConfirm && closeButton && <Button variant="secondary" onClick={() => closeModal()}>Close</Button>}
         </div>
       </div>
     </div>
