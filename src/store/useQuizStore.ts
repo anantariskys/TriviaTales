@@ -21,6 +21,7 @@ interface QuizState {
   setCurrentQuestionIndex: (index: number) => void;
   decrementTimer: () => void;
   reset: () => void;
+  resetResults: () => void;
   setTimer: (timer: number) => void;
   results: {
     correct: number;
@@ -41,6 +42,9 @@ export const useQuizStore = create(
       timer: 60,
       answers: {},
       results: { correct: 0, incorrect: 0, answered: 0,totalQuestion: 0 ,answeredQuestions: [] },
+      resetResults() {
+        set({ results: { correct: 0, incorrect: 0, answered: 0, totalQuestion: 0, answeredQuestions: [] } });
+      },
       setResults(results) {
         set({ results });
       },
